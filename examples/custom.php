@@ -1,21 +1,9 @@
 <?php
 
-require 'Exception.php';
-require 'HttpTransportException.php';
-require 'InvalidArgumentException.php';
-require 'NoServiceAvailableException.php';
-require 'Response.php';
-require 'Document.php';
-require 'Service.php';
-require 'sfLuceneService.class.php';
-require 'sfLuceneCriteria.class.php';
 require '../phpSolrQueryToken.php';
 require '../phpSolrQueryTerm.php';
 require '../phpSolrQueryParser.php';
 $factory = function() { return new phpSolrQueryTerm(); };
-
-$criteria = new sfLuceneCriteria;
-$stack = null;
 
 // #1
 $q = '"security council" foo:lala +dong (doing)';
@@ -28,8 +16,7 @@ var_dump($terms->serialize());
 var_dump($terms);
 
 // #2
-//$q = '"security council" -foo:(bar OR doing OR lala)';
-$q = '(bar OR doing)';
+$q = '"security council" -foo:(bar OR doing OR lala) (check AND (foo OR BAR))';
 require '../phpSolrQueryParserBraces.php';
 $parser = new phpSolrQueryParserBraces($factory);
 
@@ -42,6 +29,16 @@ var_dump($terms);
 // #3
 $q = '"security council" ding -code:A/RES/*';
 require 'phpSolrQueryTermCustom.php';
+require 'Exception.php';
+require 'HttpTransportException.php';
+require 'InvalidArgumentException.php';
+require 'NoServiceAvailableException.php';
+require 'Response.php';
+require 'Document.php';
+require 'Service.php';
+require 'sfLuceneService.class.php';
+require 'sfLuceneCriteria.class.php';
+$criteria = new sfLuceneCriteria;
 $stack = array(new phpSolrQueryTermCustom('AND', $criteria));
 $parser = new phpSolrQueryParser($factory);
 
