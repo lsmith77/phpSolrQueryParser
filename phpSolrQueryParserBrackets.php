@@ -8,19 +8,6 @@
  */
 class phpSolrQueryParserBrackets extends phpSolrQueryParser
 {
-    protected function getMap()
-    {
-        $map = parent::getMap();
-        $map['('] = phpSolrQueryToken::BRACE_OPEN;
-        $map[')'] = phpSolrQueryToken::BRACE_CLOSE;
-        return $map;
-    }
-
-    protected function getTokenizerRegexp()
-    {
-        return '@(\s)|(["+():-])@';
-    }
-
     public function processToken($token)
     {
         if ($token->type !== phpSolrQueryToken::BRACE_OPEN

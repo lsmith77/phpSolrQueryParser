@@ -18,7 +18,7 @@ $criteria = new sfLuceneCriteria;
 $stack = null;
 
 // #1
-$q = '"security council" foo:lala +dong doing';
+$q = '"security council" foo:lala +dong (doing)';
 $parser = new phpSolrQueryParser($factory);
 
 $tokens = $parser->parse($q);

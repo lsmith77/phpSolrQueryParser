@@ -74,12 +74,14 @@ class phpSolrQueryParser
             'and' => phpSolrQueryToken::LOGICAL_AND,
             'or'  => phpSolrQueryToken::LOGICAL_OR,
             ':'  => phpSolrQueryToken::COLON,
+            '(' => phpSolrQueryToken::BRACE_OPEN,
+            ')' => phpSolrQueryToken::BRACE_CLOSE,
         );
     }
 
     protected function getTokenizerRegexp()
     {
-        return '@(\s)|(["+:-])@';
+        return '@(\s)|(["+():-])@';
     }
 
     protected function tokenize($searchQuery)
@@ -99,12 +101,6 @@ class phpSolrQueryParser
 
     public function processToken($token)
     {
-        if ($token->type === phpSolrQueryToken::BRACE_OPEN
-            && $token->type === phpSolrQueryToken::BRACE_CLOSE
-        ) {
-            throw new Exception('Brackets not supported');
-        }
-
         $factory = $this->factory;
         switch ($this->state) {
         case 'normal':
@@ -143,7 +139,6 @@ class phpSolrQueryParser
                     $this->prefix = $this->stack[$this->stackLevel]->getPrefix();
                 }
                 break;
-
             case phpSolrQueryToken::SPACE:
                 if ($this->string !== '') {
                     if ($this->prefix || $this->field) {
@@ -158,7 +153,6 @@ class phpSolrQueryParser
                     $this->string = $this->prefix = $this->field = '';
                 }
                 break;
-
             case phpSolrQueryToken::ESCAPE:
                 $this->string = $token->token;
                 $this->preEscapeState = $this->state;
@@ -180,13 +174,16 @@ class phpSolrQueryParser
                 }
                 $this->stackType[$this->stackLevel] = 'and';
                 break;
-
             case phpSolrQueryToken::PLUS:
             case phpSolrQueryToken::MINUS:
                 if ($this->prefix !== '') {
                     throw new Exception('No prefix allowed after a prefix');
                 }
                 $this->prefix = $token->token;
+                break;
+            case phpSolrQueryToken::BRACE_OPEN:
+            case phpSolrQueryToken::BRACE_CLOSE:
+                $this->string .= '\\'.$token->token;
                 break;
             }
             break;
@@ -200,6 +197,8 @@ class phpSolrQueryParser
             case phpSolrQueryToken::LOGICAL_OR:
             case phpSolrQueryToken::PLUS:
             case phpSolrQueryToken::MINUS:
+            case phpSolrQueryToken::BRACE_OPEN:
+            case phpSolrQueryToken::BRACE_CLOSE:
                 $this->string .= $token->token;
             case phpSolrQueryToken::ESCAPE:
                 $this->state = $this->preEscapeState;
@@ -238,6 +237,8 @@ class phpSolrQueryParser
             case phpSolrQueryToken::LOGICAL_OR:
             case phpSolrQueryToken::PLUS:
             case phpSolrQueryToken::MINUS:
+            case phpSolrQueryToken::BRACE_OPEN:
+            case phpSolrQueryToken::BRACE_CLOSE:
                 $this->string .= $token->token;
                 break;
             }
