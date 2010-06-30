@@ -1,9 +1,16 @@
 Adapted from ezcSearchQueryBuilder and ezcSearchQueryToken
-http://svn.ezcomponents.org/viewvc.cgi/trunk/Search/src/
+http://svn.ezcomponents.org/viewvc.cgi/trunk/Search/src
 
-license: http://ez.no/licenses/new_bsd New BSD License
+license: New BSD License
+http://ez.no/licenses/new_bsd
 
-The main difference is that this set of classes makes it possible to hook in totally different serialization formats for the generated queries. Furthermore the parser has been expanded to also support backslash escape chars, brace support is optional and the parser itself is extensible.
+The main difference is that this set of classes
+* makes it possible to hook in totally different serialization formats for the generated queries.
+* the parser has been expanded to also support
+ * backslash escape chars
+ * makes brace support is optional
+ * properly implements fielded terms
+ * make the parser itself is extensible.
 
-This all might be merged back into ezcSearch eventually, needs unit testing etc.
+This all might be merged back into ezcSearch eventually and needs unit testing etc.
 I developed this to parse solr queries for resolutionfinder.org and construct queries against apache solr
