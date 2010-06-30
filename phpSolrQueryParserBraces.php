@@ -6,7 +6,7 @@
  *
  * @license http://ez.no/licenses/new_bsd New BSD License
  */
-class phpSolrQueryParserBrackets extends phpSolrQueryParser
+class phpSolrQueryParserBraces extends phpSolrQueryParser
 {
     public function processToken($token)
     {

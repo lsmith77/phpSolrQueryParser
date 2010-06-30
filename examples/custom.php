@@ -30,8 +30,8 @@ var_dump($terms);
 // #2
 //$q = '"security council" -foo:(bar OR doing OR lala)';
 $q = '(bar OR doing)';
-require '../phpSolrQueryParserBrackets.php';
-$parser = new phpSolrQueryParserBrackets($factory);
+require '../phpSolrQueryParserBraces.php';
+$parser = new phpSolrQueryParserBraces($factory);
 
 $tokens = $parser->parse($q);
 $terms = $parser->processTerms($tokens);
