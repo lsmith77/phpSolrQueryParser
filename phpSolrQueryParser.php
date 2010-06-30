@@ -90,7 +90,7 @@ class phpSolrQueryParser
         $tokens = array();
         $tokenArray = preg_split($this->getTokenizerRegexp(), $searchQuery, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
         foreach ($tokenArray as $token) {
-            if (isset($map[strtolower( $token )])) {
+            if (isset($map[strtolower($token)])) {
                 $tokens[] = new phpSolrQueryToken($map[strtolower($token)], $token);
             } else {
                 $tokens[] = new phpSolrQueryToken(phpSolrQueryToken::STRING, $token);
@@ -164,7 +164,7 @@ class phpSolrQueryParser
                 break;
             case phpSolrQueryToken::LOGICAL_OR:
                 if ($this->stackType[$this->stackLevel] === 'and') {
-                    throw new Exception('You can not mix AND and OR without using "(" or ")".');
+                    throw new Exception('You can not mix AND and OR without using "(" and ")".');
                 }
                 $this->stackType[$this->stackLevel] = 'or';
                 break;
@@ -274,8 +274,7 @@ class phpSolrQueryParser
         if (empty($this->stack[0])) {
             return array();
         }
-        $this->stack = $this->stack[0];
 
-        return $this->stack;
+        return $this->stack[0];
     }
 }
