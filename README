@@ -1,0 +1,7 @@
+Adapted from ezcSearchQueryBuilder and ezcSearchQueryToken
+http://svn.ezcomponents.org/viewvc.cgi/trunk/Search/src/
+
+license: http://ez.no/licenses/new_bsd New BSD License
+
+This all might be merged back into ezcSearch eventually, needs unit testing etc.
+I developed this to parse solr queries for resolutionfinder.org and construct queries against apache solr
