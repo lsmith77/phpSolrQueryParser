@@ -27,7 +27,7 @@ var_dump($terms->serialize());
 var_dump($terms);
 
 // #3
-$q = '"security council" ding -code:A/RES/*';
+$q = '"security council" +africa tag:malaria code:A/RES/*';
 require 'phpSolrQueryTermCustom.php';
 require 'Exception.php';
 require 'HttpTransportException.php';

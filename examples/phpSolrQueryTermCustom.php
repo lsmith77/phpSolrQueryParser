@@ -23,16 +23,19 @@ class phpSolrQueryTermCustom extends phpSolrQueryTerm {
                 break;
             case 'tag':
                 $field = 'tag_ids';
+/*
                 $q = Doctrine_Query::create()
                     ->select('t.id')
                     ->from('Tag t')
                     ->where('t.name = ?', array($term));
                 $term = $q->execute(array(), Doctrine_Core::HYDRATE_SINGLE_SCALAR);
+*/
+                $term = rand(1, 100);
                 break;
             default:
                 throw new Exception('Unsupported field: '.$field);
             }
-            $this->criteria->addField($prefix.$field, $term, $op);
+            $this->criteria->addField($prefix.$field, $term, $op, true);
             return;
         }
         $term = parent::processTerm($term);
