@@ -5,6 +5,7 @@ License: New BSD License
 http://ez.no/licenses/new_bsd
 
 The main difference is that this set of classes
+* only addresses parsing and query generation, it does not handle communication with a Solr server like ezcSearch does
 * makes it possible to hook in totally different serialization formats for the generated queries.
 * the parser has been expanded to also support
  * backslash escape chars
